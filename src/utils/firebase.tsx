@@ -1,8 +1,7 @@
 import React, { createContext } from 'react';
 import app from 'firebase/app';
 
-const FirebaseContext = createContext(app);
-export { FirebaseContext };
+export const FirebaseContext = createContext(app);
 
 const FirebaseProvider: React.FC<{}> = ({ children }) => {
   if (!app.apps.length) {

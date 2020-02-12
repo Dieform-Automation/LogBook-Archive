@@ -4,8 +4,8 @@ import { FirebaseContext } from './utils/firebase';
 import 'firebase/auth';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding: 10%;
   justify-content: center;
 `;
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     try {
       const userData = await firebase
         .auth()
-        .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        .signInWithPopup(new firebase.auth.GoogleAuthProvider().setCustomParameters({'hd': 'dieform.ca'}));
         console.log(userData);
         setUser(userData.user?.displayName);
     } catch (err) {
