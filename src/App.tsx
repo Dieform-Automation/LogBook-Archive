@@ -5,13 +5,14 @@ import Login from './components/Login';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { AuthContextProvider } from './contexts/AuthContext';
 import { Home } from './components/Home';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   return (
     <AuthContextProvider>
       <Router>
         <div>
-          <Route exact path="/" component={Home}></Route>
+          <PrivateRoute exact path="/" component={Home}></PrivateRoute>
           <Route exact path="/login" component={Login}></Route>
         </div>
       </Router>

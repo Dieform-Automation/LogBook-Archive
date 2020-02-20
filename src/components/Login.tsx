@@ -1,9 +1,8 @@
-import React, { useContext, useCallback } from 'react';
-import { withRouter, Redirect, RouteComponentProps } from 'react-router';
+import React, { useContext } from 'react';
+import { withRouter, Redirect } from 'react-router';
 import { Image, Button } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 
-import app, { GoogleAuthProvider } from '../contexts/base';
 import { AuthContext } from '../contexts/AuthContext';
 import logo from '../assets/logo.png';
 
@@ -22,24 +21,8 @@ const Container = styled.div`
   }
 `;
 
-const Login: React.FC<RouteComponentProps> = ({ history }) => {
-  const currentUser = useContext(AuthContext);
-  const handleLogin = useCallback(
-    async event => {
-      event.preventDefault();
-      try {
-        await app.auth().signInWithPopup(
-          GoogleAuthProvider.setCustomParameters({
-            hd: 'dieform.ca'
-          })
-        );
-        history.push('/');
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [history]
-  );
+const Login: React.FC = () => {
+  const {currentUser, login} = useContext(AuthContext);
 
   if (currentUser != null) {
     return <Redirect to="/" />;
@@ -48,7 +31,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <Container>
       <Image src={logo} size="large"></Image>
-      <Button primary fluid size="big" onClick={handleLogin}>
+      <Button primary fluid size="big" onClick={login}>
         Login
       </Button>
     </Container>
