@@ -4,23 +4,29 @@ import logo from '../assets/logo.png';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar: React.FC = () => {
-  const { logout } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
+  const isLoggedIn: boolean = currentUser != null;
+  
   return (
-    <Menu stackable>
-      <Menu.Item>
-        <img src={logo} alt="Dieform logo" />
-      </Menu.Item>
-      <Menu.Item name="customers">Customers</Menu.Item>
-      <Menu.Item name="parts">Parts</Menu.Item>
-      <Menu.Item name="tools">Tools</Menu.Item>
-      <Menu.Menu position="right">
-        <Menu.Item>
-          <Button primary onClick={logout}>
-            Logout
-          </Button>
-        </Menu.Item>
-      </Menu.Menu>
-    </Menu>
+    <div>
+      {isLoggedIn && (
+        <Menu stackable>
+          <Menu.Item>
+            <img src={logo} alt="Dieform logo" />
+          </Menu.Item>
+          <Menu.Item name="customers">Customers</Menu.Item>
+          <Menu.Item name="parts">Parts</Menu.Item>
+          <Menu.Item name="tools">Tools</Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Button primary onClick={logout}>
+                Logout
+              </Button>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      )}
+    </div>
   );
 };
 
