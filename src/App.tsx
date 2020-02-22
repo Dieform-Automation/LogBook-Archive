@@ -6,16 +6,17 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { AuthContextProvider } from './contexts/AuthContext';
 import { Home } from './components/Home';
 import PrivateRoute from './components/PrivateRoute';
+import Layout from './components/Layout';
 
 const App = () => {
   return (
     <AuthContextProvider>
-      <Router>
-        <div>
+      <Layout>
+        <Router>
           <PrivateRoute exact path="/" component={Home}></PrivateRoute>
           <Route exact path="/login" component={Login}></Route>
-        </div>
-      </Router>
+        </Router>
+      </Layout>
     </AuthContextProvider>
   );
 };
