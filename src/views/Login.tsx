@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   const { currentUser, login } = useContext(AuthContext);
 
   if (currentUser != null) {
-    return <Redirect to="/" />;
+    return <Redirect to="/customers" />;
   }
 
   return (

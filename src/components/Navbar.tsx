@@ -4,8 +4,8 @@ import logo from '../assets/logo.png';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar: React.FC = () => {
-  const { currentUser, logout } = useContext(AuthContext);
-  const isLoggedIn: boolean = currentUser != null;
+  const { logout, isLoggedIn } = useContext(AuthContext);
+  
   
   return (
     <div>
