@@ -6,12 +6,12 @@ const PrivateRoute: React.ComponentType<any> = ({
   component: Component,
   ...rest
 }) => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   return (
     <Route
       {...rest}
       render={props =>
-        isLoggedIn ? (
+        currentUser != null ? (
           <Component {...props} />
         ) : (
           <Redirect

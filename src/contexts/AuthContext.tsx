@@ -3,7 +3,6 @@ import app, { GoogleAuthProvider } from './base';
 
 type AuthProps = {
   currentUser: firebase.User | null;
-  isLoggedIn: () => boolean;
   login: () => void;
   logout: () => void;
 };
@@ -12,11 +11,10 @@ export const AuthContext = React.createContext<Partial<AuthProps>>({});
 
 export const AuthContextProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<AuthProps['currentUser']>();
-  
-  const isLoggedIn = () => {return currentUser != null;}
 
   useEffect(() => {
     app.auth().onAuthStateChanged(user => {
+      console.log(user);
       setCurrentUser(user);
     });
   }, []);
@@ -43,7 +41,11 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser: currentUser, isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        currentUser: currentUser,
+        login: login,
+        logout: logout
+      }}
     >
       {children}
     </AuthContext.Provider>

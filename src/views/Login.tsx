@@ -24,17 +24,21 @@ const Container = styled.div`
 `;
 
 const Login: React.FC = () => {
-  const { currentUser, login } = useContext(AuthContext);
+  const { login, currentUser } = useContext(AuthContext);
+  const isLoggedIn = currentUser != null
+  console.log(isLoggedIn);
 
-  if (currentUser != null) {
-    return <Redirect to="/customers" />;
+  if (isLoggedIn) {
+    return <Redirect to="/" />;
   }
 
   return (
     <Container>
-      <h1 style={{fontSize: 64}}>LogBook</h1>
-      <p style={{fontSize: 20}}>All things inventory management at Dieform</p>
-      <Button primary fluid size='huge' onClick={login}>Login</Button>
+      <h1 style={{ fontSize: 64 }}>LogBook</h1>
+      <p style={{ fontSize: 20 }}>All things inventory management at Dieform</p>
+      <Button primary fluid size="huge" onClick={login}>
+        Login
+      </Button>
     </Container>
   );
 };
