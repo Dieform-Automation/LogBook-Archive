@@ -1,46 +1,48 @@
-import React, { useState } from 'react';
-import { Table, Button, Icon } from 'semantic-ui-react';
-import Customer from '../models/Customer';
+import React from 'react';
+import { Table } from 'semantic-ui-react';
+import { useTable, useSortBy } from 'react-table';
 
-type DataTableProps = {
-  data: Array<Customer>;
+type Props = {
+  data: any;
+  columns: any;
 };
 
-const DataTable: React.FC<DataTableProps> = ({ data }) => {
-  const [customers, setCustomers] = useState(data);
-  
-  const addCustomer = () => {
-    setCustomers([data[0]].concat(customers))
-  };
+const DataTable: React.FC<Props> = ({ columns, data }) => {
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow
+  } = useTable({ columns, data }, useSortBy);
 
   return (
-    <Table celled>
+    <Table celled {...getTableProps()}>
       <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell>Address</Table.HeaderCell>
-          <Table.HeaderCell>Phone</Table.HeaderCell>
-          <Table.HeaderCell>
-            <Button
-              floated="right"
-              icon
-              labelPosition="left"
-              color="green"
-              size="small"
-              onClick={addCustomer}
-            >
-              <Icon name="user" /> Add Customer
-            </Button>
-          </Table.HeaderCell>
-        </Table.Row>
+        {headerGroups.map(headerGroup => (
+          <Table.Row {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <Table.HeaderCell
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+              >
+                {column.render('Header')}
+              </Table.HeaderCell>
+            ))}
+          </Table.Row>
+        ))}
       </Table.Header>
-      <Table.Body>
-        {customers.map(customer => {
+      <Table.Body {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
           return (
-            <Table.Row key={customer.id}>
-              <Table.Cell>{customer.name}</Table.Cell>
-              <Table.Cell>{customer.address.street}</Table.Cell>
-              <Table.Cell>{customer.phone}</Table.Cell>
+            <Table.Row {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                return (
+                  <Table.Cell {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </Table.Cell>
+                );
+              })}
             </Table.Row>
           );
         })}
