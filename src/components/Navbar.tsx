@@ -6,7 +6,6 @@ import { AuthContext } from '../contexts/AuthContext';
 const Navbar: React.FC = () => {
   const { logout, isLoggedIn } = useContext(AuthContext);
   
-  
   return (
     <div>
       {isLoggedIn && (

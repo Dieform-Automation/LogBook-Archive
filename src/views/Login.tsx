@@ -24,9 +24,7 @@ const Container = styled.div`
 `;
 
 const Login: React.FC = () => {
-  const { login, currentUser } = useContext(AuthContext);
-  const isLoggedIn = currentUser != null
-  console.log(isLoggedIn);
+  const { login, isLoggedIn } = useContext(AuthContext);
 
   if (isLoggedIn) {
     return <Redirect to="/" />;
