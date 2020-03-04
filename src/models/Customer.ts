@@ -1,11 +1,12 @@
 export default interface Customer {
   id: number;
   name: string;
-  address: {
-    street: string;
-    city: string;
-    province: string;
-    postalCode: string;
-  };
+  email: string;
+  street: string;
+  city: string;
+  country: string;
+  province: string;
+  postalCode: string;
   phone: string;
+  pointOfContact: string;
 }
