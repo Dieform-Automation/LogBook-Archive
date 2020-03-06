@@ -3,6 +3,7 @@ import { Container, Header } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 import DataTable from '../components/DataTable';
 import Customer from '../models/Customer';
+import AddCustomerModal from '../components/AddCustomerModal';
 
 export const Customers: React.FC = () => {
   const PaddedContainer = styled(Container)`
@@ -74,7 +75,7 @@ export const Customers: React.FC = () => {
   return (
     <PaddedContainer>
       <Header as="h1">Customers</Header>
-      <DataTable columns={columns} data={data}></DataTable>
+      <DataTable columns={columns} data={data} action={<AddCustomerModal/>}></DataTable>
     </PaddedContainer>
   );
 };
