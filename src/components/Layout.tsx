@@ -1,13 +1,19 @@
-import React from 'react'
-import Navbar from './Navbar'
+import React from 'react';
+import Navbar from './Navbar';
+import { AuthContextProvider } from '../contexts/AuthContext';
+import { CustomerContextProvider } from '../contexts/CustomerContext';
 
-const Layout: React.FC = ({children}) => {
+const Layout: React.FC = ({ children }) => {
   return (
-    <div>
-      <Navbar/>
-      {children}
-    </div>
-  )
-}
+    <AuthContextProvider>
+      <CustomerContextProvider>
+        <div>
+          <Navbar />
+          {children}
+        </div>
+      </CustomerContextProvider>
+    </AuthContextProvider>
+  );
+};
 
-export default Layout
+export default Layout;
