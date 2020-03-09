@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Form } from 'semantic-ui-react';
+import { CustomerContext } from '../contexts/CustomerContext';
+import Customer from '../models/Customer';
 
 const AddCustomerForm: React.FC = () => {
+  const {addCustomer} = useContext(CustomerContext)
+
   const schema: Yup.ObjectSchema = Yup.object({
-    company: Yup.string().required('Required'),
+    name: Yup.string().required('Required'),
     pointOfContact: Yup.string().required('Required'),
     email: Yup.string()
       .email('Invalid email address')
@@ -30,7 +34,7 @@ const AddCustomerForm: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      company: '',
+      name: '',
       pointOfContact: '',
       email: '',
       street: '',
@@ -42,7 +46,9 @@ const AddCustomerForm: React.FC = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      if(addCustomer) {
+        addCustomer(values as Customer)
+      }
     }
   });
 
@@ -52,8 +58,8 @@ const AddCustomerForm: React.FC = () => {
         <Form.Input
           label="Company"
           name="company"
-          {...formik.getFieldProps('company')}
-          error={formik.touched.company && formik.errors.company}
+          {...formik.getFieldProps('name')}
+          error={formik.touched.name && formik.errors.name}
         />
         <Form.Input
           label="Contact"
