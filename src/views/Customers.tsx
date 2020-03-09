@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Container, Header } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 import DataTable from '../components/DataTable';
-import AddCustomerModal from '../components/AddCustomerModal';
 import { CustomerContext } from '../contexts/CustomerContext';
+import AddCustomerForm from '../components/AddCustomerForm';
 
 const PaddedContainer = styled(Container)`
   padding-top: 3%;
@@ -41,7 +41,7 @@ export const Customers: React.FC = () => {
       <DataTable
         columns={columns}
         data={customers}
-        action={<AddCustomerModal />}
+        action={<AddCustomerForm />}
       ></DataTable>
     </PaddedContainer>
   );
