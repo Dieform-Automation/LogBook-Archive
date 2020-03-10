@@ -16,7 +16,7 @@ export const CustomerContextProvider: React.FC = ({ children }) => {
   const addCustomer = (customer: Customer): boolean => {
     const newList = customers.concat([customer]);
     try {
-      axios.post<Customer>(`${apiURL}/customer`, customer);
+      axios.post<Customer>(`${apiURL}/customer/`, customer);
       console.log(newList);
       setCustomers(newList);
       return true;
@@ -29,8 +29,8 @@ export const CustomerContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function getCustomerData() {
       try {
-        const response = await axios.get<{ data: Array<Customer>}>(
-          `${apiURL}/customer`
+        const response = await axios.get<{ data: Array<Customer> }>(
+          `${apiURL}/customer/`
         );
         console.log(response.data);
         setCustomers(response.data.data);

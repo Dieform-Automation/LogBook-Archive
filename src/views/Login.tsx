@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Redirect } from 'react-router';
+import React, { useContext, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Button } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 import { AuthContext } from '../contexts/AuthContext';
@@ -23,12 +23,14 @@ const Container = styled.div`
   }
 `;
 
-const Login: React.FC = () => {
+const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const { login, isLoggedIn } = useContext(AuthContext);
 
-  if (isLoggedIn) {
-    return <Redirect to="/" />;
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push('/');
+    }
+  }, [history, isLoggedIn]);
 
   return (
     <Container>
