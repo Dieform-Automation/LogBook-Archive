@@ -20,7 +20,7 @@ export const Customers: React.FC = () => {
       },
       {
         Header: 'Contact',
-        accessor: 'pointOfContact'
+        accessor: 'point_of_contact'
       },
 
       {

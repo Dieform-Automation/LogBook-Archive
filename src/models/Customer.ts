@@ -6,7 +6,7 @@ export default interface Customer {
   city: string;
   country: string;
   province: string;
-  postalCode: string;
+  postal_code: string;
   phone: string;
-  pointOfContact: string;
+  point_of_contact: string;
 }
