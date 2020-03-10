@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
-import { Container, Header } from 'semantic-ui-react';
-import styled from '@emotion/styled';
+import { Header } from 'semantic-ui-react';
 import DataTable from '../components/DataTable';
 import { CustomerContext } from '../contexts/CustomerContext';
 import AddCustomerForm from '../components/AddCustomerForm';
-import Layout from '../components/Layout';
 
-const PaddedContainer = styled(Container)`
-  padding-top: 3%;
-`;
+import Layout from '../components/Layout';
+import PaddedContainer from '../styles/PaddedContainer';
 
 export const Customers: React.FC = () => {
   const { customers } = useContext(CustomerContext);
