@@ -11,7 +11,7 @@ const AddCustomerForm: React.FC = () => {
 
   const schema: Yup.ObjectSchema = Yup.object({
     name: Yup.string().required('Required'),
-    pointOfContact: Yup.string().required('Required'),
+    point_of_contact: Yup.string().required('Required'),
     email: Yup.string()
       .email('Invalid email address')
       .required('Required'),
@@ -22,7 +22,7 @@ const AddCustomerForm: React.FC = () => {
       .min(2, 'Must be 2 letter code')
       .max(2, 'Must be 2 letter code')
       .required('Required'),
-    postalCode: Yup.string()
+    postal_code: Yup.string()
       .matches(/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, 'Invalid postal code')
       .required('Required'),
     phone: Yup.string()
@@ -36,13 +36,13 @@ const AddCustomerForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      pointOfContact: '',
+      point_of_contact: '',
       email: '',
       street: '',
       city: '',
       country: '',
       province: '',
-      postalCode: '',
+      postal_code: '',
       phone: ''
     },
     validationSchema: schema,
@@ -79,10 +79,10 @@ const AddCustomerForm: React.FC = () => {
             />
             <Form.Input
               label="Contact"
-              name="pointOfContact"
-              {...formik.getFieldProps('pointOfContact')}
+              name="point_of_contact"
+              {...formik.getFieldProps('point_of_contact')}
               error={
-                formik.touched.pointOfContact && formik.errors.pointOfContact
+                formik.touched.point_of_contact && formik.errors.point_of_contact
               }
             />
             <Form.Input
@@ -123,9 +123,9 @@ const AddCustomerForm: React.FC = () => {
             />
             <Form.Input
               label="Postal Code"
-              name="postalCode"
-              {...formik.getFieldProps('postalCode')}
-              error={formik.touched.postalCode && formik.errors.postalCode}
+              name="postal_code"
+              {...formik.getFieldProps('postal_code')}
+              error={formik.touched.postal_code && formik.errors.postal_code}
             />
           </Form.Group>
           <Form.Input
