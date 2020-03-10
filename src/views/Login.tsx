@@ -28,7 +28,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push('/');
+      history.push('/customers');
     }
   }, [history, isLoggedIn]);
 

@@ -14,9 +14,9 @@ const Navbar: React.FC<RouteComponentProps> = ({ location, history }) => {
           <img src={logo} alt="Dieform logo" />
         </Menu.Item>
         <Menu.Item
-          active={location.pathname === '/'}
+          active={location.pathname === '/customers'}
           name="customers"
-          onClick={() => history.push('/')}
+          onClick={() => history.push('/customers')}
         >
           Customers
         </Menu.Item>
