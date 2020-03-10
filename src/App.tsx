@@ -5,16 +5,19 @@ import Login from './views/Login';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Customers } from './views/Customers';
 import PrivateRoute from './components/PrivateRoute';
-import Layout from './components/Layout';
+import { AuthContextProvider } from './contexts/AuthContext';
+import { CustomerContextProvider } from './contexts/CustomerContext';
 
 const App = () => {
   return (
-    <Layout>
-      <Router>
-        <PrivateRoute exact path="/" component={Customers}></PrivateRoute>
-        <Route exact path="/login" component={Login}></Route>
-      </Router>
-    </Layout>
+    <AuthContextProvider>
+      <CustomerContextProvider>
+        <Router>
+          <PrivateRoute exact path="/" component={Customers}></PrivateRoute>
+          <Route exact path="/login" component={Login}></Route>
+        </Router>
+      </CustomerContextProvider>
+    </AuthContextProvider>
   );
 };
 

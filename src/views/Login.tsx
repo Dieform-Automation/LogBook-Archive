@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import { Button } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 import { AuthContext } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
 
 const Container = styled.div`
   display: grid;
@@ -31,13 +32,15 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Container>
-      <h1 style={{ fontSize: 64 }}>LogBook</h1>
-      <p style={{ fontSize: 20 }}>All things inventory management at Dieform</p>
-      <Button primary fluid size="huge" onClick={login}>
-        Login
-      </Button>
-    </Container>
+      <Container>
+        <h1 style={{ fontSize: 64 }}>LogBook</h1>
+        <p style={{ fontSize: 20 }}>
+          All things inventory management at Dieform
+        </p>
+        <Button primary fluid size="huge" onClick={login}>
+          Login
+        </Button>
+      </Container>
   );
 };
 
