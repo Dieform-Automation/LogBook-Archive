@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Layout from '../components/Layout';
 import { Header, Button } from 'semantic-ui-react';
 import DataTable from '../components/DataTable';
 import PaddedContainer from '../styles/PaddedContainer';
+import { PartContext } from '../contexts/PartContext';
 
 export const Parts: React.FC = () => {
+  const {parts} = useContext(PartContext);
+
   const columns = React.useMemo(
     () => [
       {
@@ -28,7 +31,7 @@ export const Parts: React.FC = () => {
     <Layout>
       <PaddedContainer>
         <Header as="h1">Parts</Header>
-        <DataTable columns={columns} data={[]} action={<Button />}></DataTable>
+        <DataTable columns={columns} data={parts} action={<Button />}></DataTable>
       </PaddedContainer>
     </Layout>
   );

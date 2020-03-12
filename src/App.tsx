@@ -8,22 +8,25 @@ import PrivateRoute from './components/PrivateRoute';
 import { AuthContextProvider } from './contexts/AuthContext';
 import { CustomerContextProvider } from './contexts/CustomerContext';
 import { Parts } from './views/Parts';
+import { PartContextProvider } from './contexts/PartContext';
 
 const App = () => {
   return (
     <AuthContextProvider>
       <CustomerContextProvider>
-        <Router>
-          <Switch>
-            <PrivateRoute
-              path="/customers"
-              component={Customers}
-            ></PrivateRoute>
-            <PrivateRoute path="/parts" component={Parts}></PrivateRoute>
-            <Route path="/login" component={Login}></Route>
-            <Route path="*" component={Login}></Route>
-          </Switch>
-        </Router>
+        <PartContextProvider>
+          <Router>
+            <Switch>
+              <PrivateRoute
+                path="/customers"
+                component={Customers}
+              ></PrivateRoute>
+              <PrivateRoute path="/parts" component={Parts}></PrivateRoute>
+              <Route path="/login" component={Login}></Route>
+              <Route path="*" component={Login}></Route>
+            </Switch>
+          </Router>
+        </PartContextProvider>
       </CustomerContextProvider>
     </AuthContextProvider>
   );
