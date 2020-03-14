@@ -62,10 +62,8 @@ const AddCustomerForm: React.FC = () => {
           validationSchema={schema}
           onSubmit={values => {
             alert(JSON.stringify(values, null, 2));
-            if (addCustomer) {
-              addCustomer(values as Customer);
-              setOpen(false);
-            }
+            addCustomer(values as Customer);
+            setOpen(false);
           }}
         >
           {formik => (
@@ -144,10 +142,7 @@ const AddCustomerForm: React.FC = () => {
                   justifyContent: 'flex-end'
                 }}
               >
-                <Form.Button
-                  type="submit"
-                  primary
-                >
+                <Form.Button type="submit" primary>
                   Submit
                 </Form.Button>
               </div>
