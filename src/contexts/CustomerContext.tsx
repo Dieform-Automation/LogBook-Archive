@@ -46,7 +46,6 @@ export const CustomerContextProvider: React.FC = ({ children }) => {
         const response = await axios.get<{ data: Array<Customer> }>(
           `${apiURL}/customer/`
         );
-        console.log(response.data);
         setCustomers(response.data.data);
       } catch (error) {
         console.log(error);
