@@ -4,17 +4,32 @@ import axios from 'axios';
 
 type PartProps = {
   parts: Array<Part>;
-  addPart: (customer: Part) => boolean;
+  addPart: (customer: Part) => void;
 };
 
 const apiURL = process.env.REACT_APP_API_URL;
 export const PartContext = React.createContext<PartProps>({
   parts: [],
-  addPart: () => true
+  addPart: () => {}
 });
 
 export const PartContextProvider: React.FC = ({ children }) => {
   const [parts, setParts] = useState<PartProps['parts']>([]);
+
+  const addPart = async (part: Part): Promise<void> => {
+    try {
+      const response = await axios.post<{ data: Part }>(
+        `${apiURL}/part/`,
+        part
+      );
+      const newPart = response.data.data;
+      const newList = parts.concat([newPart]);
+      console.log(newList);
+      setParts(newList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     async function getPartData() {
@@ -22,7 +37,6 @@ export const PartContextProvider: React.FC = ({ children }) => {
         const response = await axios.get<{ data: PartProps['parts'] }>(
           `${apiURL}/part/`
         );
-        console.log(response);
         setParts(response.data.data);
       } catch (error) {
         console.log(error);
@@ -32,7 +46,7 @@ export const PartContextProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <PartContext.Provider value={{ parts: parts, addPart: () => (true) }}>
+    <PartContext.Provider value={{ parts: parts, addPart: addPart }}>
       {children}
     </PartContext.Provider>
   );
