@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import Layout from '../components/Layout';
-import { Header, Button } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import DataTable from '../components/DataTable';
 import PaddedContainer from '../styles/PaddedContainer';
 import { PartContext } from '../contexts/PartContext';
@@ -9,18 +9,14 @@ import { CustomerContext } from '../contexts/CustomerContext';
 
 export const Parts: React.FC = () => {
   const { parts } = useContext(PartContext);
-  const { getCustomerIds } = useContext(CustomerContext);
+  const { customerIdMap } = useContext(CustomerContext);
 
   const data = useMemo(() => {
-    const customerIdMap = getCustomerIds();
-
     parts.forEach(part => {
       part.customer = customerIdMap.get(part.customer_id);
-      console.log(part);
     });
-    console.log(parts);
     return parts;
-  }, [parts, getCustomerIds]);
+  }, [parts, customerIdMap]);
 
   const columns = React.useMemo(
     () => [
