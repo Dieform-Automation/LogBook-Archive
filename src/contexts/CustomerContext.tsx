@@ -1,28 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Customer from '../models/Customer';
 import axios from 'axios';
 
 type CustomerProps = {
   customers: Array<Customer>;
-  addCustomer: (customer: Customer) => boolean;
+  customerIdMap: Map<number, string>;
+  addCustomer: (customer: Customer) => void;
 };
 
 const apiURL = process.env.REACT_APP_API_URL;
-export const CustomerContext = React.createContext<Partial<CustomerProps>>({});
+export const CustomerContext = React.createContext<CustomerProps>({
+  customers: [],
+  customerIdMap: new Map<number, string>(),
+  addCustomer: () => {}
+});
 
 export const CustomerContextProvider: React.FC = ({ children }) => {
   const [customers, setCustomers] = useState<CustomerProps['customers']>([]);
 
-  const addCustomer = (customer: Customer): boolean => {
-    const newList = customers.concat([customer]);
+  const customerIdMap = useMemo((): Map<number, string> => {
+    const idMap = new Map<number, string>();
+    customers.forEach(customer => {
+      idMap.set(customer.id || 9999, customer.name);
+    });
+    return idMap;
+  }, [customers]);
+
+  const addCustomer = async (customer: Customer): Promise<void> => {
     try {
-      axios.post<Customer>(`${apiURL}/customer/`, customer);
-      console.log(newList);
+      const response = await axios.post<{ data: Customer }>(
+        `${apiURL}/customer/`,
+        customer
+      );
+      const newCustomer = response.data.data;
+      const newList = customers.concat([newCustomer]);
       setCustomers(newList);
-      return true;
     } catch (error) {
       console.log(error);
-      return false;
     }
   };
 
@@ -43,7 +57,11 @@ export const CustomerContextProvider: React.FC = ({ children }) => {
 
   return (
     <CustomerContext.Provider
-      value={{ customers: customers, addCustomer: addCustomer }}
+      value={{
+        customers: customers,
+        customerIdMap: customerIdMap,
+        addCustomer: addCustomer
+      }}
     >
       {children}
     </CustomerContext.Provider>
