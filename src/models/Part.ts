@@ -3,4 +3,5 @@ export default interface Part {
   customer_id: number;
   number: string;
   name: string; 
+  customer?: string;
 }
