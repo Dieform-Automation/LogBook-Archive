@@ -8,7 +8,10 @@ type PartProps = {
 };
 
 const apiURL = process.env.REACT_APP_API_URL;
-export const PartContext = React.createContext<Partial<PartProps>>({});
+export const PartContext = React.createContext<PartProps>({
+  parts: [],
+  addPart: () => true
+});
 
 export const PartContextProvider: React.FC = ({ children }) => {
   const [parts, setParts] = useState<PartProps['parts']>([]);
@@ -29,7 +32,7 @@ export const PartContextProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <PartContext.Provider value={{ parts: parts }}>
+    <PartContext.Provider value={{ parts: parts, addPart: () => (true) }}>
       {children}
     </PartContext.Provider>
   );
