@@ -1,18 +1,32 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import Layout from '../components/Layout';
 import { Header, Button } from 'semantic-ui-react';
 import DataTable from '../components/DataTable';
 import PaddedContainer from '../styles/PaddedContainer';
 import { PartContext } from '../contexts/PartContext';
+import PartForm from '../components/AddPartForm';
+import { CustomerContext } from '../contexts/CustomerContext';
 
 export const Parts: React.FC = () => {
-  const {parts} = useContext(PartContext);
+  const { parts } = useContext(PartContext);
+  const { getCustomerIds } = useContext(CustomerContext);
+
+  const data = useMemo(() => {
+    const customerIdMap = getCustomerIds();
+
+    parts.forEach(part => {
+      part.customer = customerIdMap.get(part.customer_id);
+      console.log(part);
+    });
+    console.log(parts);
+    return parts;
+  }, [parts, getCustomerIds]);
 
   const columns = React.useMemo(
     () => [
       {
         Header: 'Customer',
-        accessor: 'customer_id'
+        accessor: 'customer'
       },
       {
         Header: 'Part Name',
@@ -31,7 +45,11 @@ export const Parts: React.FC = () => {
     <Layout>
       <PaddedContainer>
         <Header as="h1">Parts</Header>
-        <DataTable columns={columns} data={parts} action={<Button />}></DataTable>
+        <DataTable
+          columns={columns}
+          data={data}
+          action={<PartForm />}
+        ></DataTable>
       </PaddedContainer>
     </Layout>
   );
