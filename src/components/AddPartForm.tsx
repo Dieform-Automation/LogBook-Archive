@@ -1,8 +1,10 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Modal, Button, Icon, Form } from 'semantic-ui-react';
 import { CustomerContext } from '../contexts/CustomerContext';
+import { PartContext } from '../contexts/PartContext';
+import Part from '../models/Part';
 
 const schema: Yup.ObjectSchema = Yup.object({
   customer_id: Yup.number().required('Required'),
@@ -11,23 +13,21 @@ const schema: Yup.ObjectSchema = Yup.object({
 });
 
 const PartForm = () => {
-  const { getCustomerIds } = useContext(CustomerContext);
-  let idMap = new Map<number, string>();
-  if (getCustomerIds) {
-    idMap = getCustomerIds();
-  }
-  
+  const { customerIdMap } = useContext(CustomerContext);
+  const { addPart } = useContext(PartContext);
+  const [isOpen, setOpen] = useState(false);
+
   const options = useMemo(() => {
-    let options: {key: number, text: string, value: number}[] = [];
-    idMap.forEach((value, key) => {
+    let options: { key: number; text: string; value: number }[] = [];
+    customerIdMap.forEach((value, key) => {
       options.push({
         key: key,
         text: value,
         value: key
-      })
-    })  
+      });
+    });
     return options;
-  }, [idMap]);
+  }, [customerIdMap]);
 
   return (
     <Modal
@@ -37,18 +37,22 @@ const PartForm = () => {
           <Icon name="plus" /> Add Part
         </Button>
       }
+      open={isOpen}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
     >
       <Modal.Header>Add Part</Modal.Header>
       <Modal.Content>
         <Formik
           initialValues={{
-            customer_id: undefined,
+            customer_id: 0,
             number: '',
             name: ''
           }}
           validationSchema={schema}
           onSubmit={values => {
-            alert(JSON.stringify(values, null, 2));
+            addPart(values as Part);
+            setOpen(false);
           }}
         >
           {formik => (
